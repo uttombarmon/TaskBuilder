@@ -1,28 +1,27 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../AuthProvider/AuthProvider";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
-const Navbar = () => {
+const DashNav = () => {
     const { user, logOut } = useContext(AuthContext)
     const nav1 = <>
-        <li><Link to={''}>Home</Link></li>
-        <li><Link to={''}>Pricing</Link></li>
         <li><Link to={''}>Support</Link></li>
-        {
-            user ?
-                <li><Link to={'/dashboard'}>Dashboard</Link></li>
-                : <li><Link to={'login'}>Login</Link></li>
-        }
     </>
     const logOutUser = () => {
         logOut();
     }
     return (
         <div>
-            <div className="navbar md:px-10 lg:px-20 font-semibold bg-base-200">
+            <div className="navbar md:px-10 font-semibold bg-base-200">
                 <div className="navbar-start">
                     <a className="text-xl font-extrabold">Task<span className=" text-orange-500">Builder</span></a>
                 </div>
+                {/* <div className=" navbar-center">
+                    <div className="form-control flex">
+                        <input type="text" placeholder="Search" className="input input-bordered rounded-r-none w-24 md:w-auto" />
+                    </div>
+                    <span className="btn btn-primary rounded-l-none">Search</span>
+                </div> */}
                 <div className="navbar-end">
                     <div className=" hidden lg:flex">
                         <ul className="menu menu-horizontal px-1">
@@ -44,7 +43,7 @@ const Navbar = () => {
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
-                                    <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                    <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
                                 </div>
                             </div>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
@@ -59,4 +58,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default DashNav;
