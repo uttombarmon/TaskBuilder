@@ -13,7 +13,7 @@ const Banner = () => {
                         <p className=' text-xl md:text-5xl my-2 font-extrabold'>Your All-in-One Task Solution</p>
                         <p className=' text-base md:text-xl font-bold'>Task<span className=" text-orange-500">Builder</span> Seamless, Intuitive, Powerfull!</p>
                     </div>
-                    <Link to={'/dashboard/todaytask'} className='btn underline btn-primary'>Let`s Explore</Link>
+                    <Link to={'/dashboard/todo'} className='btn underline btn-primary'>Let`s Explore</Link>
                 </div>
             </div>
             <div data-aos="zoom-in-left"

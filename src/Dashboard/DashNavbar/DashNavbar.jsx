@@ -17,7 +17,7 @@ const DashNav = () => {
         <div>
             <div className="navbar md:px-10 font-semibold bg-base-200">
                 <div className="navbar-start">
-                    <Link className="text-xl font-extrabold link link-hover">Task<span className=" text-orange-500">Builder</span></Link>
+                    <Link to={'/'} className="text-xl font-extrabold link link-hover">Task<span className=" text-orange-500">Builder</span></Link>
                 </div>
                 {/* <div className=" navbar-center">
                     <div className="form-control flex">

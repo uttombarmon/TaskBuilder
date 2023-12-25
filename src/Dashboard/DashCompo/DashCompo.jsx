@@ -7,32 +7,6 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import toast from "react-hot-toast";
-// import { data } from "autoprefixer";
-// import toast from "react-hot-toast";
-// a little function to help us with reordering the result
-// const reorder =  (list, startIndex, endIndex) => {
-//     const result = Array.from(list);
-//     const [removed] = result.splice(startIndex, 1);
-//     result.splice(endIndex, 0, removed);
-
-//     return result;
-//   };
-const initialData = {
-    todo: [
-        { id: 'task1', content: 'Task 1' },
-        { id: 'task2', content: 'Task 2' },
-        { id: 'task3', content: 'Task 3' },
-    ],
-    ongoing: [
-        { id: 'task4', content: 'Task 4' },
-        { id: 'task5', content: 'Task 5' },
-    ],
-    completed: [
-        { id: 'task6', content: 'Task 6' },
-        { id: 'task7', content: 'Task 7' },
-    ],
-};
-
 const DashCompo = () => {
     const [tasks, setTasks] = useState(null)
     const [write, setWrite] = useState(false)
@@ -43,7 +17,7 @@ const DashCompo = () => {
             .then(e => {
                 setTasks(e.data)
                 // setItems(e.data)
-                console.log(e.data);
+                // console.log(e.data);
             })
             .catch(e => console.log(e.message))
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,8 +28,7 @@ const DashCompo = () => {
     const cdate = new Date()
     const isoDate = cdate.toISOString();
     const ltime = cdate.toLocaleTimeString([], { hour12: false });
-
-    const dates = `${isoDate.slice(0, 10)}T${ltime}`;
+    const dates = `${isoDate.slice(0, 10)}T${ltime.slice(0,5)}`;
     console.log(dates)
     const { register, handleSubmit } = useForm()
 
@@ -65,27 +38,38 @@ const DashCompo = () => {
             "email": user?.email,
             "description": data.description,
             "deadline": data.deadline,
-            "priority": data.priority
+            "priority": data.priority,
+            "status": "todo"
         }
         console.log(task);
-        //     axiosSecure.post('/addtask', { task })
-        //         .then(() => toast.success("Thanks for your review"))
-        //         .catch(e => console.log(e.message))
+        axiosSecure.post('/addtask', { task })
+            .then(() => toast.success("Task added!"))
+            .catch(e => console.log(e.message))
     }
-    // const [tasks, setTasks] = useState(initialData);
+    const deleteTask = (d) => {
+        // console.log(d);
+        const id = d;
+        axiosSecure.delete(`/deleteTask?id=${id}`)
+            .then(e => {
+                if (e.data.deletedCount > 0) {
+                    toast.success("Task removed!")
+                }
+            })
+            .catch(e => console.log(e.message))
+    }
 
     const onDragEnd = result => {
         const { source, destination, draggableId } = result;
-        
+
         if (!destination) return;
-        console.log(result);
+        // console.log(result);
         if (destination.droppableId !== source.droppableId) {
             const status = destination.droppableId
-            const id = result.draggableId
+            const id = draggableId
 
-            axiosSecure.put('changeStatus',{"id":id,"status":status})
-            .then(()=>toast.success("Task : ", destination.droppableId))
-            .catch(e=> console.log(e.message))           
+            axiosSecure.put('changeStatus', { "id": id, "status": status })
+                .then(() => toast.success("Task : ", destination.droppableId))
+                .catch(e => console.log(e.message))
         }
 
         if (source.droppableId === destination.droppableId && source.index === destination.index) {
@@ -150,14 +134,6 @@ const DashCompo = () => {
                 }
 
             </div>
-            {/* <ul>
-                {
-                    tasks &&
-                    tasks.map(d => {
-                        return 
-                    })
-                }
-            </ul> */}
             {tasks &&
                 <DragDropContext onDragEnd={onDragEnd}>
                     <div style={{ display: 'flex', justifyContent: 'space-around', margin: '20px' }}>
@@ -195,8 +171,8 @@ const DashCompo = () => {
                                                                 <Link className="ml-4 link link-hover self-center">{task.title.slice(0, 30)}...</Link>
                                                             </div>
                                                             <ul className=" flex text-2xl">
-                                                                <li className=" mr-6"><FaRegEdit></FaRegEdit></li>
-                                                                <li><MdDelete /></li>
+                                                                <Link  to={`edit/${task._id}`} className=" link link-hover mr-6"><FaRegEdit></FaRegEdit></Link>
+                                                                <li onClick={() => deleteTask(task._id)}><MdDelete /></li>
                                                             </ul>
                                                         </li>
                                                     </div>

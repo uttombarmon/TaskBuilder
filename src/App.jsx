@@ -9,13 +9,17 @@ import Register from './Login_Register/Register.jsx'
 import Dashboard from './Dashboard/Dashboard.jsx'
 import DashCompo from './Dashboard/DashCompo/DashCompo.jsx'
 import PrivateRoute from './PrivateRoute/PrivateRoute.jsx'
+import Edit from './Dashboard/DashCompo/Edit/Edit.jsx';
+import Completed from './Dashboard/Completed/Completed.jsx';
+import OnGoing from './Dashboard/OnGoing/OnGoing.jsx';
+import Layout from './Layout.jsx';
 
 function App() {
 
   const router = createBrowserRouter([
     {
-      path: '',
-      element: <App></App>,
+      path: '/',
+      element: <Layout></Layout>,
       errorElement: <div>Route Not Found</div>,
       children: [
         {
@@ -37,12 +41,20 @@ function App() {
       element: <PrivateRoute> <Dashboard></Dashboard></PrivateRoute>,
       children: [
         {
-          path: 'todaytask',
+          path: 'todo',
           element: <DashCompo></DashCompo>
         },
         {
-          path: 'addtask',
-          element: <div>Add task</div>
+          path: 'ongoing',
+          element: <OnGoing></OnGoing>
+        },
+        {
+          path:'todaytask/edit/:id',
+          element: <Edit></Edit>
+        },
+        {
+          path:'completed',
+          element: <Completed></Completed>
         }
       ]
     }
