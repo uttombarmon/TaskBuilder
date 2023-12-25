@@ -10,7 +10,7 @@ const Navbar = () => {
         <li><Link to={''}>Support</Link></li>
         {
             user ?
-                <li><Link to={'/dashboard'}>Dashboard</Link></li>
+                <li><Link to={'/dashboard/todaytask'}>Dashboard</Link></li>
                 : <li><Link to={'login'}>Login</Link></li>
         }
     </>
@@ -18,7 +18,9 @@ const Navbar = () => {
         logOut();
     }
     return (
-        <div>
+        <div data-aos="fade-down"
+            data-aos-easing="linear"
+            data-aos-duration="100">
             <div className="navbar md:px-10 lg:px-20 font-semibold bg-base-200">
                 <div className="navbar-start">
                     <a className="text-xl font-extrabold">Task<span className=" text-orange-500">Builder</span></a>

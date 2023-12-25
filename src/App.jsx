@@ -3,13 +3,16 @@ import Footer from "./Footer/Footer";
 import Navbar from "./Navbar/Navbar";
 import './App.css'
 import { Toaster } from 'react-hot-toast';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
 
 function App() {
 
-
+  // ..
+  AOS.init();
   return (
     <>
-          <Toaster
+      <Toaster
         toastOptions={{
           // Define default options
           className: '',

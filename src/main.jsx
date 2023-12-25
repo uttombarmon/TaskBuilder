@@ -8,6 +8,7 @@ import Home from './Home/Home.jsx'
 import AuthProvider from './AuthProvider/AuthProvider.jsx'
 import Register from './Login_Register/Register.jsx'
 import Dashboard from './Dashboard/Dashboard.jsx'
+import DashCompo from './Dashboard/DashCompo/DashCompo.jsx'
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,17 @@ const router = createBrowserRouter([
   },
   {
     path:'dashboard',
-    element: <Dashboard></Dashboard>
+    element: <Dashboard></Dashboard>,
+    children:[
+      {
+        path:'todaytask',
+        element: <DashCompo></DashCompo>
+      },
+      {
+        path:'addtask',
+        element: <div>Add task</div>
+      }
+    ]
   }
 ])
 
