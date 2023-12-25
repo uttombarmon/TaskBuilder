@@ -1,21 +1,30 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
+    const navigate = useNavigate()
     const nav1 = <>
         <li><Link to={''}>Home</Link></li>
         <li><Link to={''}>Pricing</Link></li>
         <li><Link to={''}>Support</Link></li>
         {
             user ?
-                <li><Link to={'/dashboard/todaytask'}>Dashboard</Link></li>
-                : <li><Link to={'login'}>Login</Link></li>
+                <>
+                    <li><Link to={'/dashboard/todaytask'}>Dashboard</Link></li>
+                </>
+                :
+                <>
+                    <li><Link to={'/login'}>Login</Link></li>
+                    <li><Link to={'/register'} className="">Register Now</Link></li>
+                </>
         }
     </>
     const logOutUser = () => {
-        logOut();
+        logOut()
+            .then(() => navigate('/'))
+            .catch(e => console.log(e))
     }
     return (
         <div data-aos="fade-down"

@@ -22,7 +22,7 @@ const AuthProvider = ({children}) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    // user login by google 
+    // user login by google
     const provider = new GoogleAuthProvider()
     const signupWihtGoogle = () => {
         return signInWithPopup(auth, provider)

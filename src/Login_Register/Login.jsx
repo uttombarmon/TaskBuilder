@@ -41,7 +41,6 @@ const Login = () => {
     }
     return (
         <div className="bg-base-200">
-            <Link to={'/register'} className="btn bg-slate-300 w-fit absolute top-3 mr-3 right-0">Register Now</Link>
             <div className="hero min-h-screen">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center w-fit mx-auto lg:text-left">

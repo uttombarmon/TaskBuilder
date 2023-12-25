@@ -1,43 +1,62 @@
-import { Outlet } from 'react-router-dom'
-import Footer from "./Footer/Footer";
-import Navbar from "./Navbar/Navbar";
-import './App.css'
-import { Toaster } from 'react-hot-toast';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // You can also use <link> for styles
+import AuthProvider from './AuthProvider/AuthProvider';
+import Login from './Login_Register/Login.jsx'
+import './index.css'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import Home from './Home/Home.jsx'
+import Register from './Login_Register/Register.jsx'
+import Dashboard from './Dashboard/Dashboard.jsx'
+import DashCompo from './Dashboard/DashCompo/DashCompo.jsx'
+import PrivateRoute from './PrivateRoute/PrivateRoute.jsx'
 
 function App() {
 
+  const router = createBrowserRouter([
+    {
+      path: '',
+      element: <App></App>,
+      errorElement: <div>Route Not Found</div>,
+      children: [
+        {
+          path: '/',
+          element: <Home></Home>
+        },
+        {
+          path: 'login',
+          element: <Login></Login>
+        },
+        {
+          path: 'register',
+          element: <Register></Register>
+        },
+      ]
+    },
+    {
+      path: 'dashboard',
+      element: <PrivateRoute> <Dashboard></Dashboard></PrivateRoute>,
+      children: [
+        {
+          path: 'todaytask',
+          element: <DashCompo></DashCompo>
+        },
+        {
+          path: 'addtask',
+          element: <div>Add task</div>
+        }
+      ]
+    }
+  ])
   // ..
   AOS.init();
   return (
     <>
-      <Toaster
-        toastOptions={{
-          // Define default options
-          className: '',
-          duration: 3000,
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
 
-          // Default options for specific types
-          success: {
-            duration: 3000,
-            theme: {
-              primary: 'green',
-              secondary: 'black',
-            },
-          },
-        }}></Toaster>
-      <div>
-        {/* navbar section  */}
-        <Navbar></Navbar>
-        <Outlet></Outlet>
-        {/* footer section  */}
-        <Footer></Footer>
-      </div>
+      {/* context api */}
+      <AuthProvider>
+        {/* routers  */}
+        <RouterProvider router={router}></RouterProvider>
+      </AuthProvider>
     </>
   )
 }

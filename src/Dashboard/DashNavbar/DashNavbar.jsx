@@ -1,20 +1,23 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const DashNav = () => {
     const { user, logOut } = useContext(AuthContext)
+    const navigate = useNavigate()
     const nav1 = <>
         <li><Link to={''}>Support</Link></li>
     </>
     const logOutUser = () => {
-        logOut();
+        logOut()
+        .then(() => navigate('/'))
+        .catch(e => console.log(e))
     }
     return (
         <div>
             <div className="navbar md:px-10 font-semibold bg-base-200">
                 <div className="navbar-start">
-                    <a className="text-xl font-extrabold">Task<span className=" text-orange-500">Builder</span></a>
+                    <Link className="text-xl font-extrabold link link-hover">Task<span className=" text-orange-500">Builder</span></Link>
                 </div>
                 {/* <div className=" navbar-center">
                     <div className="form-control flex">
